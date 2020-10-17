@@ -55,9 +55,46 @@ function start() {
             stopGame(); 
         }
     }, 1000);
-
     next();
 }
+//function to start asking questions
+function next() {
+    currentQuestion++;
+    var curQuestion = questions[currentQuestion]
+
+    var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
+
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+
+    for (i = 0; i < curQuestion.choices.length; i++) {
+        var currentChoice = curQuestion.choices[i]
+        console.log(currentChoice)
+
+        // create buttons for each choice
+        var newButton = document.createElement("button")
+        newButton.textContent = currentChoice
+        document.getElementById("questionChoices").appendChild = newButton;
+    }
+
+
+
+}
+
+
+
+
+//timer going down if wrong answer
+if (answer === userAnswer) {
+  nextQuestion();
+} else {
+  nextQuestion();
+  counter = counter - 10;
+}
+
+
+
+
 
 
 
