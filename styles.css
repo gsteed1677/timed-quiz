@@ -1,0 +1,71 @@
+/* Nav bar to displai timer and highscore */
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+#nav {
+  display: block;
+  background-color: white;
+  display: inline-block;
+  width: 98vw;
+  border: 3px solid #0a4e9c;
+  border-radius: 5px;
+  margin: 6px;
+}
+
+/* Body with color and text formatting */
+
+body {
+  font-family: arial;
+  background-color: #b6acaf;
+}
+
+#quizBody {
+  text-align: center;
+  padding: 12vh;
+}
+h1 {
+  font-size: 60px;
+}
+
+h3 {
+  margin: 0px;
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p {
+  color: #0a4e9c;
+  font-size: 25px;
+}
+
+/* button color and float */
+button {
+  width: 100px;
+  height: 100px;
+  border: bold;
+  background-color: #0a4e9c;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 17px;
+  font-family: arial;
+  margin: 10px;
+}
+
+button:hover {
+  transition-duration: 0.4s;
+  background-color: #272525;
+}
+
+#quiz {
+  text-align: center;
+}
