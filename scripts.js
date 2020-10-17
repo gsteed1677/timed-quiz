@@ -74,7 +74,7 @@ function next() {
         // create buttons for each choice
         var newButton = document.createElement("button")
         newButton.textContent = currentChoice
-        document.getElementById("questionChoices").appendChild = newButton;
+        document.getElementById("questionChoices").appendChild(newButton);
     }
 
 
