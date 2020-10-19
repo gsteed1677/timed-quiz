@@ -55,9 +55,72 @@ function start() {
         //if statement to stop game if the timer hits zero
         if (timeRun <= 0) {
             clearInterval(timer);
+            endGame();
         }
     }, 1000);
     next();
+}
+//stop the timer to end the game 
+function endGame() {
+    clearInterval(timer);
+
+    var quizContent = `
+    <h2>Game over!</h2>
+    <h3>You got a ` + score +  `</h3>
+    <input type="text" id="name" placeholder="First name"> 
+    <button onclick="setScore()">Set score!</button>`;
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+}
+
+//store the scores on local storage
+function setScore() {
+    localStorage.setItem("highscore", score);
+    localStorage.setItem("highscoreName",  document.getElementById('name').value);
+    getScore();
+}
+
+
+function getScore() {
+    var quizContent = `
+    <h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
+    <h1>` + localStorage.getItem("highscore") + `</h1><br> 
+    
+    <button onclick="clearScore()">Clear!</button><button onclick="resetGame()">Play Again!</button>
+    
+    `;
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+}
+
+//clears the score name and value in the local storage if the user selects 'clear score'
+function clearScore() {
+    localStorage.setItem("highscore", "");
+    localStorage.setItem("highscoreName",  "");
+
+    resetGame();
+}
+
+//reset the game 
+function resetGame() {
+    clearInterval(timer);
+    score = 0;
+    currentQuestion = -1;
+    timeLeft = 0;
+    timer = null;
+
+    document.getElementById("timeLeft").innerHTML = timeLeft;
+
+    var quizContent = `
+    <h1>
+        US Geography Quiz!
+    </h1>
+    <h3>
+        Click to play!   
+    </h3>
+    <button onclick="start()">Start!</button>`;
+
+    document.getElementById("quizBody").innerHTML = quizContent;
 }
 
 //function to start asking questions
@@ -65,6 +128,7 @@ function next() {
     currentQuestion++;
 
        if (currentQuestion > questions.length - 1) {
+        endGame()
         return;
     }
 
@@ -95,17 +159,20 @@ function next() {
 
         
 }
+//function to gather user answers and deduct points
 
 function grade(currentChoice, currentAnswer) {
     if(currentChoice === currentAnswer)
     {
         score += timeRun
+        alert("correct");
         console.log("correct")
     }
     else
     {
         score -=10;
         timeRun = timeRun -15;
+        alert("incorrect");
         console.log("incorrect")
     }
     next()
