@@ -42,10 +42,10 @@ var currentQuestion = -1;
 var timeRun = 0;
 var timer;
 var questionCount = 0;
+var currentAnswer;
 
 //timer function - set to 90 seconds
 function start() {
-
     timeRun = 90;
     document.getElementById("timeLeft").innerHTML = timeRun;
 //set interval to subtract time by 1 second
@@ -55,22 +55,21 @@ function start() {
         //if statement to stop game if the timer hits zero
         if (timeRun <= 0) {
             clearInterval(timer);
-            captureUserScore(); 
         }
     }, 1000);
     next();
 }
+
 //function to start asking questions
 function next() {
     currentQuestion++;
 
        if (currentQuestion > questions.length - 1) {
-        endGame();
         return;
     }
 
     var curQuestion = questions[currentQuestion]
-
+    currentAnswer = questions[currentQuestion].answer
     var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
     
 
@@ -85,7 +84,9 @@ function next() {
 
         // create buttons for each choice
         var newButton = document.createElement("button")
-        newButton.addEventListener('click', grade)
+        newButton.addEventListener('click', function(){
+            grade(this.textContent, currentAnswer)
+        })
         newButton.textContent = currentChoice
         // console.log(newButton)
         document.getElementById("questionChoices").appendChild(newButton);
@@ -95,7 +96,18 @@ function next() {
         
 }
 
-function grade() {
+function grade(currentChoice, currentAnswer) {
+    if(currentChoice === currentAnswer)
+    {
+        score += timeRun
+        console.log("correct")
+    }
+    else
+    {
+        score -=10;
+        timeRun = timeRun -15;
+        console.log("incorrect")
+    }
     next()
 }
 
