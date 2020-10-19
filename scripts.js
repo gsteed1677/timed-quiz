@@ -35,7 +35,6 @@ var questions = [
 ]
 
 
-
 //Numeric variables for timer and  
 var score = 0;
 var currentQuestion = -1;
@@ -44,9 +43,9 @@ var timer;
 var questionCount = 0;
 var currentAnswer;
 
-//timer function - set to 90 seconds
+//timer function - set to 60 seconds
 function start() {
-    timeRun = 90;
+    timeRun = 60;
     document.getElementById("timeLeft").innerHTML = timeRun;
 //set interval to subtract time by 1 second
     timer = setInterval(function() {
@@ -60,13 +59,13 @@ function start() {
     }, 1000);
     next();
 }
-//stop the timer to end the game 
+//pushes enGame function if timer hits zero or if player runs through all the questions
 function endGame() {
     clearInterval(timer);
 
     var quizContent = `
     <h2>Game over!</h2>
-    <h3>You got a ` + score +  `</h3>
+    <h3>You got a ` + score + ` /60 </h3>
     <input type="text" id="name" placeholder="First name"> 
     <button onclick="setScore()">Set score!</button>`;
 
@@ -80,7 +79,7 @@ function setScore() {
     getScore();
 }
 
-
+//function to bring in quizContent to local storage 
 function getScore() {
     var quizContent = `
     <h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
@@ -93,21 +92,22 @@ function getScore() {
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
-//clears the score name and value in the local storage if the user selects 'clear score'
+//function set to Clear score if button is pressed and resets the game for them to play again
 function clearScore() {
+    //push to local storage again
     localStorage.setItem("highscore", "");
     localStorage.setItem("highscoreName",  "");
 
     resetGame();
 }
 
-//reset the game 
+//function to restart the game
 function resetGame() {
     clearInterval(timer);
     score = 0;
     currentQuestion = -1;
     timeLeft = 0;
-    timer = null;
+    timer = 0;
 
     document.getElementById("timeLeft").innerHTML = timeLeft;
 
@@ -126,11 +126,6 @@ function resetGame() {
 //function to start asking questions
 function next() {
     currentQuestion++;
-
-       if (currentQuestion > questions.length - 1) {
-        endGame()
-        return;
-    }
 
     var curQuestion = questions[currentQuestion]
     currentAnswer = questions[currentQuestion].answer
@@ -156,7 +151,11 @@ function next() {
         document.getElementById("questionChoices").appendChild(newButton);
         // console.log(document.getElementById("questionChoices"))
         }
-
+   
+        if (currentQuestion > questions.length - 1) {
+        endGame()
+        return;
+    }
         
 }
 //function to gather user answers and deduct points
@@ -164,13 +163,13 @@ function next() {
 function grade(currentChoice, currentAnswer) {
     if(currentChoice === currentAnswer)
     {
-        score += timeRun
+        score += 10;
         alert("correct");
         console.log("correct")
     }
     else
     {
-        score -=10;
+    
         timeRun = timeRun -15;
         alert("incorrect");
         console.log("incorrect")
