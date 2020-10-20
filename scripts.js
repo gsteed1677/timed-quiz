@@ -70,6 +70,7 @@ function endGame() {
     <button onclick="setScore()">Set score!</button>`;
 
     document.getElementById("quizBody").innerHTML = quizContent;
+    document.getElementById("questionChoices").innerHTML = '';
 }
 
 //store the scores on local storage
@@ -127,6 +128,11 @@ function resetGame() {
 function next() {
     currentQuestion++;
 
+    if (currentQuestion > questions.length - 1) {
+        endGame()
+        return;
+    }
+
     var curQuestion = questions[currentQuestion]
     currentAnswer = questions[currentQuestion].answer
     var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
@@ -152,10 +158,6 @@ function next() {
         // console.log(document.getElementById("questionChoices"))
         }
    
-        if (currentQuestion > questions.length - 1) {
-        endGame()
-        return;
-    }
         
 }
 //function to gather user answers and deduct points
