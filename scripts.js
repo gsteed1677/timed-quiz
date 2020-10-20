@@ -110,7 +110,7 @@ function resetGame() {
     timer = 0;
 
     document.getElementById("timeLeft").innerHTML = timeLeft;
-
+//build out the content from html to just reset the game to first page
     var quizContent = `
     <h1>
         US Geography Quiz!
